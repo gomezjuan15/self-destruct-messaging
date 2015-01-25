@@ -39,7 +39,10 @@
                 android:hint="@string/username_hint"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:singleLine="true"/>
+                android:singleLine="true" >
+
+                <requestFocus/>
+            </AutoCompleteTextView>
 
             <EditText
                 android:id="@+id/passwordField"
@@ -66,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signUpText"
-                android:id="@+id/textView"
+                android:id="@+id/signUpText"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="50dp"/>
 

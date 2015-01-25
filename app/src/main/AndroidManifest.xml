@@ -25,8 +25,14 @@
         <activity
             android:name="com.treehouse.gaara.selfdestructmessaging.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:parentActivityName="com.treehouse.gaara.selfdestructmessaging.LoginActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_sing_up" >
         </activity>
     </application>
 

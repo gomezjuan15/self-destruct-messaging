@@ -5,8 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,6 +35,8 @@ import java.util.List;
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
+    protected TextView mSignUpTextView;
+
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -58,6 +60,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mSignUpTextView = (TextView) findViewById(R.id.signUpText);
+        mSignUpTextView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        setupLoginForm();
+    }
+
+    private void setupLoginForm() {
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.usernameField);
         populateAutoComplete();
