@@ -72,6 +72,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_login);
 
+        mSignUpTextView = (TextView)findViewById(R.id.signUpText);
+        mSignUpTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mPassword = (EditText) findViewById(R.id.passwordField);
         mUserName = (EditText) findViewById(R.id.usernameField);
         mLoginButton = (Button) findViewById(R.id.loginButton);

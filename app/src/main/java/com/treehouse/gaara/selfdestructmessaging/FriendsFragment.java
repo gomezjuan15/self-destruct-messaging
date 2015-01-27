@@ -1,11 +1,22 @@
 package com.treehouse.gaara.selfdestructmessaging;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+import com.parse.ParseUser;
+
+import java.util.List;
 
 
 /**
@@ -13,6 +24,11 @@ import android.view.ViewGroup;
  */
 public class FriendsFragment extends ListFragment {
 
+    private static final String TAG = FriendsFragment.class.getSimpleName();
+
+    protected List<ParseUser> mFriends;
+    protected ParseRelation<ParseUser> mFriendsRelation;
+    protected ParseUser mCurrentUser;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -27,5 +43,46 @@ public class FriendsFragment extends ListFragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        mCurrentUser = ParseUser.getCurrentUser();
+        mFriendsRelation = mCurrentUser.getRelation(ParseConstants.KEY_FRIENDS_RELATION);
+
+        getActivity().setProgressBarIndeterminateVisibility(true);
+
+        ParseQuery<ParseUser> query = mFriendsRelation.getQuery();
+        query.orderByAscending(ParseConstants.KEY_USERNAME);
+
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> friends, ParseException e) {
+                getActivity().setProgressBarIndeterminateVisibility(false);
+                if(e == null) {
+                    mFriends = friends;
+                    String[] userNames = new String[mFriends.size()];
+                    int i = 0;
+                    for (ParseUser user : mFriends) {
+                        userNames[i] = user.getUsername();
+                        i++;
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            getListView().getContext(),
+                            android.R.layout.simple_list_item_1,
+                            userNames);
+                    setListAdapter(adapter);
+                } else {
+                    Log.e(TAG, e.getMessage());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+                    builder.setTitle(R.string.error_title)
+                            .setMessage(e.getMessage())
+                            .setPositiveButton(android.R.string.ok, null);
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+        });
+    }
 }
