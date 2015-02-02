@@ -54,8 +54,17 @@
         <activity
             android:name="com.treehouse.gaara.selfdestructmessaging.RecipientsActivity"
             android:label="@string/title_activity_recipients"
+            android:parentActivityName="com.treehouse.gaara.selfdestructmessaging.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.treehouse.gaara.selfdestructmessaging.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.treehouse.gaara.selfdestructmessaging.ViewImageActivity"
+            android:label="@string/title_activity_view_image"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.treehouse.gaara.selfdestructmessaging.MainActivity">
+            android:parentActivityName="com.treehouse.gaara.selfdestructmessaging.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.treehouse.gaara.selfdestructmessaging.MainActivity" />
