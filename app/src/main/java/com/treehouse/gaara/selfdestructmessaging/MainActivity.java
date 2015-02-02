@@ -258,6 +258,17 @@ public class MainActivity extends FragmentActivity
                 mediaScanIntent.setData(mMediaUri);
                 sendBroadcast(mediaScanIntent);
             }
+
+            Intent recipientsIntent = new Intent(this, RecipientsActivity.class);
+            recipientsIntent.setData(mMediaUri);
+
+            String fyleType = (requestCode == PICK_PHOTO_REQUEST ||
+                                requestCode == TAKE_PHOTO_REQUEST) ? ParseConstants.TYPE_IMAGE :
+                                                                    ParseConstants.TYPE_VIDEO;
+            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE, fyleType);
+
+            startActivity(recipientsIntent);
+
         } else if(resultCode != RESULT_CANCELED) {
             Toast.makeText(this, getString(R.string.general_error), Toast.LENGTH_LONG).show();
         }
